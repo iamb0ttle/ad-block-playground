@@ -104,7 +104,6 @@ Goal
 
   const scan = (root = document) => {
     if (root instanceof HTMLElement) {
-      // 💡 정의된 함수명(isFloatingFrame)과 일치하도록 수정했습니다.
       if (isFloatingFrame(root)) {
         removeAd(root, 'floating iframe ad rule');
         return;
