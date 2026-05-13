@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mock Webpage for Ad-Block Testing</title>
+    <style>
+        body {
+            font-family: 'Malgun Gothic', sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        .container {
+            width: 80%;
+            max-width: 1200px;
+            margin: auto;
+            overflow: hidden;
+            padding: 20px;
+        }
+
+        header {
+            background: #2c3e50;
+            color: #fff;
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        .content {
+            float: left;
+            width: 65%;
+            background: #fff;
+            padding: 30px;
+            box-sizing: border-box;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .sidebar {
+            float: right;
+            width: 30%;
+            background: #fff;
+            padding: 30px;
+            box-sizing: border-box;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        footer {
+            clear: both;
+            background: #2c3e50;
+            color: #fff;
+            text-align: center;
+            padding: 15px 0;
+            margin-top: 20px;
+        }
+
+        .ad-placeholder {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        h1,
+        h2,
+        h3 {
+            color: #333;
+        }
+
+        .clearfix::after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Daily Mock News</h1>
+        <p>애드블록 테스트를 위한 데모 환경</p>
+    </header>
+
+    <div class="container clearfix">
+
+        <div class="ad-banner sponsor-post" id="top-ad-728x90" style="text-align: center; margin-bottom: 20px;">
+            <a href="https://example.com/click" target="_blank">
+                <img src="https://placehold.co/728x90/png?text=Top+Banner+Ad" alt="Advertisement"
+                    class="img-responsive">
+            </a>
+        </div>
+
+        <div class="content">
+            <h2>오늘의 주요 기술 동향</h2>
+            <p>이곳은 본문 기사가 표시되는 영역입니다. 확장 프로그램이 웹 페이지의 정상적인 렌더링을 방해하지 않으면서 광고 요소만 정확히 타겟팅하여 제거할 수 있는지 확인하기 위한 테스트 텍스트입니다.
+            </p>
+            <p>페이지 로드 직후, 혹은 일정 시간 뒤에 다양한 DOM 조작 및 네트워크 요청을 통해 배너들이 삽입됩니다. 개발하신 Ad-block 알고리즘이 이를 어떻게 감지하고 처리하는지 콘솔과 화면을
+                통해 확인해 보세요.</p>
+
+            <div id="article-middle-injector"></div>
+
+            <p>기사의 마지막 단락입니다. 광고 차단 규칙(CSS Selector, Network Request Blocker 등)이 의도한 대로 작동하는지 검증하는 데 이 페이지가 도움이 되기를
+                바랍니다.</p>
+        </div>
+
+        <div class="sidebar">
+            <h3>많이 본 기사</h3>
+            <ul>
+                <li>웹 브라우저 확장 프로그램 구조 이해하기</li>
+                <li>효과적인 DOM 탐색 알고리즘</li>
+                <li>네트워크 트래픽 가로채기 기법</li>
+            </ul>
+
+            <div id="sidebar-widget-area" style="margin-top: 30px;"></div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Ad-Blocker Test Environment</p>
+    </footer>
+
+    <script>
+        (function () {
+            var adContainer = document.createElement('div');
+            adContainer.className = 'promo-content native-ad';
+            adContainer.innerHTML = '<a href="http://track.ad-delivery.net/v1/click"><img src="https://placehold.co/300x250/png?text=Sidebar+Rectangle+Ad" width="300" height="250" data-tracker="doubleclick"></a>';
+            document.getElementById('sidebar-widget-area').appendChild(adContainer);
+        })();
+
+        setTimeout(function () {
+            var popupAd = document.createElement('div');
+            var randomId = Math.floor(Math.random() * 10000);
+            popupAd.id = 'floating-wrap-' + randomId;
+            popupAd.style.position = 'fixed';
+            popupAd.style.bottom = '20px';
+            popupAd.style.right = '20px';
+            popupAd.style.zIndex = '9999';
+            popupAd.style.boxShadow = '0 0 10px rgba(0,0,0,0.5)';
+            popupAd.innerHTML = '<iframe src="about:blank" width="250" height="250" style="border:none; display:block;"></iframe>';
+            document.body.appendChild(popupAd);
+
+            var doc = popupAd.querySelector('iframe').contentWindow.document;
+            doc.open();
+            doc.write('<body style="margin:0;"><a href="https://example.com/promo"><img src="https://placehold.co/250x250/png?text=Floating+Iframe+Ad" alt="promo" style="display:block; width:100%; height:auto;"></a></body>');
+            doc.close();
+        }, 2500);
+
+        (function () {
+            var s = document.createElement('script');
+            s.type = 'text/javascript';
+            s.async = true;
+            s.src = 'https://dummy-ad-server-999.com/serve.js?zoneid=12345&cb=' + new Date().getTime();
+            var x = document.getElementsByTagName('script')[0];
+            x.parentNode.insertBefore(s, x);
+
+            s.onerror = function () {
+                var articleAd = document.createElement('div');
+                articleAd.setAttribute('data-ad-slot', 'in-article-fluid');
+                articleAd.style.margin = '20px 0';
+                articleAd.style.textAlign = 'center';
+                articleAd.innerHTML = '<img src="https://placehold.co/468x60/png?text=In-Article+Fallback+Ad" class="lazyload-ad ob-smart-feed">';
+                document.getElementById('article-middle-injector').appendChild(articleAd);
+            };
+        })();
+    </script>
+    <script src="adblock.js"></script>
+</body>
+
+</html>
